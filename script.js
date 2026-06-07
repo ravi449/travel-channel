@@ -144,7 +144,7 @@ function renderFilterBar() {
 function exploreCardHtml(item) {
   const badge = item.featured ? '<span class="series-pill">New</span>' : "";
   return `
-    <button type="button" class="explore-card${item.id === activeId ? " is-active" : ""}"
+    <button type="button" class="explore-card${item.featured ? " is-featured" : ""}${item.id === activeId ? " is-active" : ""}"
       data-id="${escapeHtml(item.id)}" aria-pressed="${item.id === activeId}">
       <span class="explore-card-flag">${escapeHtml(item.flag)}</span>
       <span class="explore-card-body">
@@ -221,7 +221,7 @@ function renderPicker() {
 
 function destCardHtml(item) {
   return `
-    <button type="button" class="dest-card${item.id === activeId ? " is-active" : ""}" data-id="${escapeHtml(item.id)}">
+    <button type="button" class="dest-card${item.featured ? " is-featured" : ""}${item.id === activeId ? " is-active" : ""}" data-id="${escapeHtml(item.id)}">
       <span class="dest-flag">${escapeHtml(item.flag)}</span>
       <h3>${escapeHtml(item.title)}${item.featured ? '<span class="series-pill">New</span>' : ""}</h3>
       <p>${escapeHtml(item.desc)}</p>
@@ -437,6 +437,11 @@ document.getElementById("hero-random")?.addEventListener("click", () => {
 document.getElementById("japan-shuffle")?.addEventListener("click", () => {
   const pick = randomSeries((s) => s.region === "japan");
   if (pick) playSeries(pick.id);
+});
+
+document.querySelector("[data-featured-play]")?.addEventListener("click", () => {
+  const featured = SERIES.find((s) => s.featured) || SERIES[0];
+  if (featured) playSeries(featured.id);
 });
 
 document.getElementById("series-search")?.addEventListener("input", renderExploreGrid);

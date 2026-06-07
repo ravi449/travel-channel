@@ -993,6 +993,152 @@ body.modal-open {
   color: var(--cream);
 }
 
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.78fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.hero-copy {
+  min-width: 0;
+}
+
+.hero-spotlight {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 390px);
+}
+
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  padding: 1rem;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)),
+    rgba(10, 47, 61, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto;
+  height: 70%;
+  background: radial-gradient(circle, rgba(95, 255, 214, 0.32), transparent 65%);
+  transform: rotate(-12deg);
+}
+
+.spotlight-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 230px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(12, 31, 54, 0.35), rgba(6, 93, 107, 0.28)),
+    url("https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=80")
+      center / cover no-repeat;
+  isolation: isolate;
+}
+
+.spotlight-glow {
+  position: absolute;
+  inset: 12% -20% auto;
+  height: 7rem;
+  background: linear-gradient(90deg, transparent, rgba(77, 255, 203, 0.75), rgba(205, 110, 255, 0.65), transparent);
+  filter: blur(16px);
+  transform: rotate(-8deg);
+  animation: auroraDrift 7s ease-in-out infinite alternate;
+}
+
+.spotlight-flag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 1.45rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.spotlight-play {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 4.6rem;
+  height: 4.6rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #ff0000;
+  font-size: 1.4rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.spotlight-copy {
+  position: relative;
+  padding: 1.25rem 0.5rem 0.4rem;
+}
+
+.spotlight-kicker {
+  margin: 0 0 0.45rem;
+  color: #9dffe6;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.spotlight-copy h2 {
+  margin-bottom: 0.55rem;
+  color: var(--white);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.spotlight-copy p:not(.spotlight-kicker) {
+  color: rgba(255, 251, 247, 0.86);
+  font-size: 0.98rem;
+}
+
+.spotlight-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.spotlight-link {
+  color: var(--sand);
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.spotlight-link:hover,
+.spotlight-link:focus-visible {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+@keyframes auroraDrift {
+  from {
+    transform: translateX(-8%) rotate(-8deg);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(8%) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
 .hero-rotator {
   display: inline-block;
   min-width: 5ch;
@@ -1244,6 +1390,30 @@ body.modal-open {
 .explore-card.is-active {
   border-color: var(--teal-800);
   box-shadow: 0 0 0 3px rgba(13, 59, 76, 0.15);
+}
+
+.explore-card.is-featured,
+.dest-card.is-featured {
+  border-color: rgba(232, 111, 74, 0.65);
+  background:
+    radial-gradient(circle at top right, rgba(232, 111, 74, 0.16), transparent 38%),
+    var(--white);
+}
+
+.explore-card.is-featured::before,
+.dest-card.is-featured::before {
+  content: "Featured";
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  background: var(--teal-900);
+  color: var(--cream);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .explore-card-flag {
@@ -1553,6 +1723,7 @@ body.modal-open {
 }
 
 .dest-card {
+  position: relative;
   display: grid;
   gap: 0.35rem;
   background: var(--white);
@@ -1787,6 +1958,15 @@ body.modal-open {
 
 /* Responsive */
 @media (max-width: 960px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-spotlight {
+    justify-self: stretch;
+    width: min(100%, 560px);
+  }
+
   .series-layout,
   .life-feature,
   .subscribe-card,
@@ -1864,6 +2044,14 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
 
+  .spotlight-media {
+    min-height: 190px;
+  }
+
+  .spotlight-actions .btn {
+    width: 100%;
+  }
+
   .explore-toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -1916,6 +2104,7 @@ body.modal-open {
 
   .hero-bg-layer-2,
   .hero-floating span,
+  .spotlight-glow,
   .marquee-track,
   .bell-icon {
     animation: none;
