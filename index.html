@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Shravi Life in Abroad — Tromsø, Europe, Japan, India travel series and life in Germany on YouTube."
+    />
+    <title>Shravi Life in Abroad | Travel & Life Abroad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <aside class="subscribe-dock" id="subscribe-dock" aria-label="Subscribe">
+      <div class="subscribe-dock-inner">
+        <span class="subscribe-dock-text">
+          <span class="bell-icon" aria-hidden="true">🔔</span>
+          New travel vlogs on YouTube
+        </span>
+        <button type="button" class="btn btn-yt" data-subscribe-open>
+          Subscribe free
+        </button>
+      </div>
+    </aside>
+
+    <dialog class="subscribe-modal" id="subscribe-modal" aria-labelledby="subscribe-modal-title">
+      <div class="subscribe-modal-banner">
+        <button type="button" class="modal-close modal-close-light" data-modal-close aria-label="Close">×</button>
+        <div class="channel-showcase channel-showcase-modal">
+          <div class="channel-avatar" aria-hidden="true">✈</div>
+          <div class="channel-showcase-text">
+            <p class="channel-tag">YouTube Channel</p>
+            <h2 id="subscribe-modal-title">Shravi Life in Abroad</h2>
+            <p class="channel-handle">@shravilifeinabroad</p>
+          </div>
+        </div>
+      </div>
+      <div class="subscribe-modal-body">
+        <p class="subscribe-modal-desc">
+          Subscribe for <strong>Tromsø</strong>, <strong>Europe</strong>, <strong>Japan</strong>,
+          <strong>India</strong>, and <strong>life in Germany</strong> — new videos in your feed.
+        </p>
+        <ul class="subscribe-modal-perks">
+          <li><span data-series-count>13</span>+ travel &amp; life playlists</li>
+          <li>Free — one click on YouTube</li>
+          <li>New series &amp; vlogs every upload</li>
+        </ul>
+        <a
+          class="btn-subscribe-yt"
+          data-subscribe-link
+          href="https://www.youtube.com/@shravilifeinabroad?sub_confirmation=1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="btn-subscribe-icon" aria-hidden="true">▶</span>
+          Subscribe on YouTube
+        </a>
+        <a
+          class="text-link-modal"
+          data-channel-link
+          href="https://www.youtube.com/@shravilifeinabroad"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Visit full channel →</a
+        >
+      </div>
+    </dialog>
+
+    <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+    <header class="site-header" id="top">
+      <nav class="nav" aria-label="Main">
+        <a class="logo" href="#top">
+          <span class="logo-mark" aria-hidden="true">✈</span>
+          <span class="logo-text">Shravi Life in Abroad</span>
+        </a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="#explore" data-nav>Explore</a></li>
+          <li><a href="#series" data-nav>Watch</a></li>
+          <li><a href="#japan" data-nav>Japan</a></li>
+          <li><a href="#comments" data-nav>Comments</a></li>
+          <li><a href="#subscribe" data-nav>Subscribe</a></li>
+          <li><a href="#life-abroad" data-nav>Life Abroad</a></li>
+          <li>
+            <button type="button" class="btn btn-yt btn-small" data-subscribe-open>
+              Subscribe
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-bg" id="hero-bg" aria-hidden="true">
+          <div class="hero-bg-layer hero-bg-layer-1"></div>
+          <div class="hero-bg-layer hero-bg-layer-2"></div>
+        </div>
+        <div class="hero-floating" aria-hidden="true">
+          <span>🇳🇴</span><span>🇵🇹</span><span>🇯🇵</span><span>🇮🇳</span><span>🇫🇷</span><span>🇨🇭</span><span>🇩🇪</span>
+        </div>
+        <div class="hero-inner reveal">
+          <p class="eyebrow">Travel · Life Abroad · Entertainment</p>
+          <h1>
+            Explore
+            <span class="hero-rotator" id="hero-rotator" aria-live="polite">Japan</span>
+            <br />with <em>Shravi</em>
+          </h1>
+          <p class="hero-lead">
+            Tap a destination, filter by region, or search — then watch full playlists
+            right here. From Tromsø and Europe to Japan, India, and life in Germany.
+          </p>
+          <div class="hero-chips" id="hero-chips" aria-label="Quick pick destinations"></div>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary" id="hero-random">
+              Surprise me 🎲
+            </button>
+            <button type="button" class="btn btn-yt" data-subscribe-open>
+              Subscribe on YouTube
+            </button>
+            <a class="btn btn-ghost" href="#explore">Explore all series</a>
+          </div>
+
+          <div class="hero-marquee" aria-hidden="true">
+            <div class="marquee-track" id="marquee-track"></div>
+          </div>
+          <dl class="hero-stats">
+            <div>
+              <dt>Playlists</dt>
+              <dd><span class="count-up" data-series-count-target data-target="13">0</span>+</dd>
+            </div>
+            <div>
+              <dt>Regions</dt>
+              <dd>Europe · Japan · Asia</dd>
+            </div>
+            <div>
+              <dt>Watch</dt>
+              <dd>Inline player</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section section-regions" id="regions">
+        <div class="container reveal">
+          <p class="section-label">Pick a region</p>
+          <h2>Where do you want to go?</h2>
+          <p class="section-intro">
+            Tap a region — the explorer below filters instantly.
+          </p>
+          <div class="region-bento" id="region-bento">
+            <button type="button" class="region-tile region-tile-all is-active" data-region="all">
+              <span class="region-tile-icon">🌍</span>
+              <strong>All series</strong>
+              <span class="region-tile-count" data-region-count="all">13</span>
+            </button>
+            <button type="button" class="region-tile region-tile-europe" data-region="europe">
+              <span class="region-tile-icon">🏰</span>
+              <strong>Europe</strong>
+              <span class="region-tile-count" data-region-count="europe">7</span>
+            </button>
+            <button type="button" class="region-tile region-tile-japan" data-region="japan">
+              <span class="region-tile-icon">⛩️</span>
+              <strong>Japan</strong>
+              <span class="region-tile-count" data-region-count="japan">5</span>
+            </button>
+            <button type="button" class="region-tile region-tile-asia" data-region="asia">
+              <span class="region-tile-icon">🪷</span>
+              <strong>Asia</strong>
+              <span class="region-tile-count" data-region-count="asia">1</span>
+            </button>
+            <button type="button" class="region-tile region-tile-life" data-region="life">
+              <span class="region-tile-icon">🏠</span>
+              <strong>Life abroad</strong>
+              <span class="region-tile-count" data-region-count="life">1</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-explore" id="explore">
+        <div class="container reveal">
+          <p class="section-label">Interactive explorer</p>
+          <h2>Find your next binge</h2>
+          <p class="section-intro">
+            Filter by region or search by name — click any card to play instantly below.
+          </p>
+
+          <div class="explore-toolbar">
+            <div class="filter-bar" id="filter-bar" aria-label="Filter by region"></div>
+            <label class="search-box">
+              <span class="sr-only">Search series</span>
+              <input
+                type="search"
+                id="series-search"
+                placeholder="Search Portugal, Okinawa, Germany…"
+                autocomplete="off"
+              />
+            </label>
+          </div>
+
+          <p class="results-meta" id="results-meta" aria-live="polite"></p>
+          <div class="explore-grid tilt-grid" id="explore-grid"></div>
+        </div>
+      </section>
+
+      <section class="section section-subscribe-hero" id="subscribe">
+        <div class="container reveal">
+          <div class="subscribe-card">
+            <div class="subscribe-card-copy">
+              <p class="section-label">Join the journey</p>
+              <h2>Subscribe — never miss a new series</h2>
+              <p>
+                One click on YouTube gets you every Tromsø episode, Portugal trip, Japan vlog, India diary,
+                and life-in-Germany update.
+              </p>
+              <ul class="subscribe-perks">
+                <li>✓ All travel playlists in one channel</li>
+                <li>✓ Free to subscribe</li>
+                <li>✓ New uploads straight to your feed</li>
+              </ul>
+              <div class="subscribe-card-actions">
+                <button type="button" class="btn btn-yt btn-yt-large" data-subscribe-open>
+                  Subscribe on this page
+                </button>
+                <a class="btn btn-ghost-dark" data-subscribe-link href="https://www.youtube.com/@shravilifeinabroad?sub_confirmation=1">
+                  Open YouTube subscribe
+                </a>
+              </div>
+            </div>
+            <div class="subscribe-card-widget">
+              <div class="channel-showcase channel-showcase-card">
+                <div class="channel-avatar channel-avatar-lg" aria-hidden="true">✈</div>
+                <div class="channel-showcase-text">
+                  <p class="channel-tag">YouTube Channel</p>
+                  <p class="channel-name">Shravi Life in Abroad</p>
+                  <p class="channel-handle">@shravilifeinabroad</p>
+                </div>
+              </div>
+              <a
+                class="btn-subscribe-yt btn-subscribe-yt-block"
+                data-subscribe-link
+                href="https://www.youtube.com/@shravilifeinabroad?sub_confirmation=1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="btn-subscribe-icon" aria-hidden="true">▶</span>
+                Subscribe on YouTube
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="series">
+        <div class="container reveal">
+          <p class="section-label">Now playing</p>
+          <h2>Watch by playlist</h2>
+          <p class="section-intro">
+            Your pick loads here — use the list or explorer above to switch series.
+          </p>
+
+          <div class="series-layout">
+            <article class="series-player-card">
+              <div class="series-player-header">
+                <p class="series-now-label">Now playing</p>
+                <h3 id="series-title">Tromsø Series</h3>
+                <span class="series-region-badge" id="series-badge">Europe</span>
+              </div>
+              <div class="video-wrap">
+                <iframe
+                  id="series-iframe"
+                  src="https://www.youtube.com/embed/videoseries?list=PL1fmFICKiHAG94wzaMXeWvc6r12skEfqo"
+                  title="Tromsø Series playlist"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <div class="player-controls">
+                <button type="button" class="btn-player" id="player-prev" aria-label="Previous series">← Prev</button>
+                <button type="button" class="btn-player btn-player-sub" data-subscribe-open>Subscribe</button>
+                <button type="button" class="btn-player" id="player-next" aria-label="Next series">Next →</button>
+              </div>
+              <a
+                id="series-link"
+                class="text-link"
+                href="https://www.youtube.com/playlist?list=PL1fmFICKiHAG94wzaMXeWvc6r12skEfqo"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open playlist on YouTube →</a
+              >
+            </article>
+
+            <div class="series-sidebar">
+              <label class="search-box search-box-dark">
+                <span class="sr-only">Filter player list</span>
+                <input
+                  type="search"
+                  id="picker-search"
+                  placeholder="Filter list…"
+                  autocomplete="off"
+                />
+              </label>
+              <ul class="series-picker" id="series-picker" aria-label="Choose a series"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-japan" id="japan">
+        <div class="container reveal">
+          <div class="japan-header">
+            <div>
+              <p class="section-label">Japan collection</p>
+              <h2>Five journeys across Japan</h2>
+              <p class="section-intro japan-intro">
+                From Mount Fuji lakes to Okinawa beaches — pick a Japan series and start watching.
+              </p>
+            </div>
+            <button type="button" class="btn btn-primary" id="japan-shuffle">
+              Random Japan pick
+            </button>
+          </div>
+          <div class="japan-grid" id="japan-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="destinations">
+        <div class="container reveal">
+          <p class="section-label">All destinations</p>
+          <h2>Every travel series</h2>
+          <p class="section-intro">
+            Click a card to play it in the viewer — or open directly on YouTube.
+          </p>
+          <div class="card-grid card-grid-dest" id="dest-grid"></div>
+        </div>
+      </section>
+
+      <section class="section section-sand" id="life-abroad">
+        <div class="container reveal">
+          <p class="section-label">Life abroad</p>
+          <h2>Pregnancy in Germany</h2>
+          <p class="section-intro">
+            A personal series on expecting a baby while living in Germany — healthcare,
+            culture, and day-to-day life as an expat parent-to-be.
+          </p>
+          <div class="life-feature">
+            <div class="life-copy">
+              <ul class="pill-list pill-list-inline">
+                <li>German healthcare &amp; appointments</li>
+                <li>Expat pregnancy experiences</li>
+                <li>Family life &amp; honest vlogs</li>
+              </ul>
+              <button type="button" class="btn btn-primary" data-play-life>
+                Play in viewer
+              </button>
+            </div>
+            <div class="video-wrap video-wrap-life">
+              <iframe
+                src="https://www.youtube.com/embed/videoseries?list=PL1fmFICKiHAFcUoaX6aHtNIBKEiIKNo2_"
+                title="Pregnancy in Germany playlist"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-comments" id="comments">
+        <div class="container reveal">
+          <p class="section-label">Community</p>
+          <h2>Viewer comments</h2>
+          <p class="section-intro">
+            Questions, travel tips, or hello from abroad — leave a note for Shravi and other viewers.
+          </p>
+
+          <div id="comments-fallback" class="comments-fallback" hidden>
+            <p>
+              Comments load here after Disqus is connected. You can also comment on
+              <a href="https://www.youtube.com/@shravilifeinabroad" target="_blank" rel="noopener noreferrer">YouTube</a>.
+            </p>
+          </div>
+
+          <div id="comments-root" class="comments-root">
+            <div id="disqus_thread">
+              <p class="comments-loading">Loading comments…</p>
+            </div>
+          </div>
+
+          <aside class="analytics-note" id="analytics-status" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section class="section subscribe-block">
+        <div class="container subscribe-inner reveal">
+          <div>
+            <p class="section-label">Stay connected</p>
+            <h2>New series, new adventures</h2>
+            <p>Subscribe once — watch everywhere. Tap below without leaving the site.</p>
+          </div>
+          <button type="button" class="btn btn-yt btn-yt-large" data-subscribe-open>
+            Subscribe now
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-brand">Shravi Life in Abroad</p>
+          <p class="footer-tagline">Travel and life in abroad — with heart and humor.</p>
+        </div>
+        <nav class="footer-series" id="footer-series" aria-label="Series playlists"></nav>
+        <p class="footer-copy">
+          &copy; <span id="year"></span> Shravi Life in Abroad.
+          <a href="https://www.youtube.com/@shravilifeinabroad" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="series-data.js"></script>
+    <script src="site-config.js"></script>
+    <script src="script.js"></script>
+    <script src="site-features.js"></script>
+  </body>
+</html>
