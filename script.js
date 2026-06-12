@@ -5,10 +5,37 @@ let activeId = (SERIES.find((s) => s.featured) || SERIES[0]).id;
 let activeFilter = "all";
 let pickerFilter = "";
 
-const seriesIframe = document.getElementById("series-iframe");
-const seriesTitle = document.getElementById("series-title");
-const seriesLink = document.getElementById("series-link");
-const seriesBadge = document.getElementById("series-badge");
+const seriesTitle  = document.getElementById("series-title");
+const seriesLink   = document.getElementById("series-link");
+const seriesBadge  = document.getElementById("series-badge");
+const posterBg     = document.getElementById("poster-bg");
+const posterFlagBlur = document.getElementById("poster-flag-blur");
+const posterThumb  = document.getElementById("poster-thumb");
+const posterName   = document.getElementById("poster-series-name");
+const posterBtn    = document.getElementById("poster-yt-btn");
+const posterWrap   = document.getElementById("series-poster-wrap");
+
+let playerEmbedded = false;
+
+function loadEmbed(id, { autoplay = true } = {}) {
+  if (!posterWrap) return;
+  const src = `${embedUrl(id)}&rel=0${autoplay ? "&autoplay=1" : ""}`;
+  let iframe = document.getElementById("series-iframe");
+  if (!iframe) {
+    iframe = document.createElement("iframe");
+    iframe.id = "series-iframe";
+    iframe.title = "Now playing";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.src = src;
+    posterWrap.appendChild(iframe);
+  } else if (!iframe.src.includes(`list=${id}`)) {
+    iframe.src = src;
+  }
+  posterWrap.classList.add("is-playing");
+  playerEmbedded = true;
+}
 
 const HERO_WORDS = ["Tromsø", "Japan", "Portugal", "India", "Paris", "Okinawa", "Germany"];
 
@@ -25,16 +52,30 @@ function getSeries(id) {
   return SERIES.find((s) => s.id === id);
 }
 
-function playSeries(id, { scroll = true } = {}) {
+function playSeries(id, { scroll = true, embed = false, silent = false } = {}) {
   const item = getSeries(id);
-  if (!item || !seriesIframe || !seriesTitle || !seriesLink) return;
+  if (!item) return;
 
   activeId = id;
-  seriesTitle.textContent = item.title;
-  seriesIframe.src = embedUrl(id);
-  seriesIframe.title = `${item.title} playlist`;
-  seriesLink.href = playlistUrl(id);
-  seriesLink.textContent = `Open ${item.title} on YouTube →`;
+
+  if (seriesTitle) seriesTitle.textContent = item.title;
+  if (seriesLink) {
+    seriesLink.href = playlistUrl(id);
+    seriesLink.textContent = `Open ${item.title} on YouTube →`;
+  }
+
+  // Update poster card
+  if (posterBg)       posterBg.dataset.region  = item.region;
+  if (posterFlagBlur) posterFlagBlur.textContent = item.flag;
+  if (posterName)     posterName.textContent     = item.title;
+  if (posterBtn)      posterBtn.href             = playlistUrl(id);
+  if (posterThumb && posterWrap) {
+    posterThumb.src = thumbUrl(item);
+    posterWrap.classList.add("has-thumb");
+  }
+
+  // Once playback has started, switching series keeps playing inline
+  if (embed || playerEmbedded) loadEmbed(id);
 
   if (seriesBadge) {
     seriesBadge.textContent = REGION_LABELS[item.region] || item.region;
@@ -50,14 +91,15 @@ function playSeries(id, { scroll = true } = {}) {
     if (el.matches(".explore-card")) el.setAttribute("aria-pressed", String(match));
   });
 
-  const playerCard = document.querySelector(".series-player-card");
-  if (playerCard) {
-    playerCard.classList.remove("is-pulsing");
-    void playerCard.offsetWidth;
-    playerCard.classList.add("is-pulsing");
+  if (!silent) {
+    const playerCard = document.querySelector(".series-player-card");
+    if (playerCard) {
+      playerCard.classList.remove("is-pulsing");
+      void playerCard.offsetWidth;
+      playerCard.classList.add("is-pulsing");
+    }
+    showToast(`Now playing: ${item.title}`, item.flag);
   }
-
-  showToast(`Now playing: ${item.title}`, item.flag);
 
   if (scroll) {
     const section = document.getElementById("series");
@@ -146,7 +188,10 @@ function exploreCardHtml(item) {
   return `
     <button type="button" class="explore-card${item.featured ? " is-featured" : ""}${item.id === activeId ? " is-active" : ""}"
       data-id="${escapeHtml(item.id)}" aria-pressed="${item.id === activeId}">
-      <span class="explore-card-flag">${escapeHtml(item.flag)}</span>
+      <span class="explore-card-thumb">
+        <img src="${escapeHtml(thumbUrl(item, "mq"))}" alt="" loading="lazy" decoding="async" />
+        <span class="explore-card-flag">${escapeHtml(item.flag)}</span>
+      </span>
       <span class="explore-card-body">
         <strong>${escapeHtml(item.title)}${badge}</strong>
         <small>${escapeHtml(REGION_LABELS[item.region] || item.region)}</small>
@@ -204,7 +249,9 @@ function renderPicker() {
       <button type="button" class="series-btn${s.id === activeId ? " is-active" : ""}"
         ${s.id === activeId ? 'aria-current="true"' : ""}
         data-id="${escapeHtml(s.id)}">
-        <span class="series-flag">${escapeHtml(s.flag)}</span>
+        <span class="series-thumb">
+          <img src="${escapeHtml(thumbUrl(s, "mq"))}" alt="" loading="lazy" decoding="async" />
+        </span>
         <span class="series-btn-text">
           <strong>${escapeHtml(s.title)}${s.featured ? '<span class="series-pill series-pill-small">New</span>' : ""}</strong>
           <small>${escapeHtml(REGION_LABELS[s.region] || s.region)}</small>
@@ -221,11 +268,17 @@ function renderPicker() {
 
 function destCardHtml(item) {
   return `
-    <button type="button" class="dest-card${item.featured ? " is-featured" : ""}${item.id === activeId ? " is-active" : ""}" data-id="${escapeHtml(item.id)}">
-      <span class="dest-flag">${escapeHtml(item.flag)}</span>
-      <h3>${escapeHtml(item.title)}${item.featured ? '<span class="series-pill">New</span>' : ""}</h3>
-      <p>${escapeHtml(item.desc)}</p>
-      <span class="dest-cta">Play series →</span>
+    <button type="button" class="dest-card${item.featured ? " is-featured" : ""}${item.id === activeId ? " is-active" : ""}"
+      data-id="${escapeHtml(item.id)}" data-region="${escapeHtml(item.region)}">
+      <div class="dest-thumb">
+        <img class="dest-thumb-img" src="${escapeHtml(thumbUrl(item, "mq"))}" alt="" loading="lazy" decoding="async" />
+        <span class="dest-flag">${escapeHtml(item.flag)}</span>
+      </div>
+      <div class="dest-info">
+        <h3>${escapeHtml(item.title)}${item.featured ? '<span class="series-pill">New</span>' : ""}</h3>
+        <p>${escapeHtml(item.desc)}</p>
+        <span class="dest-cta">Play series →</span>
+      </div>
     </button>`;
 }
 
@@ -244,10 +297,15 @@ function japanCardHtml(item) {
   return `
     <button type="button" class="japan-card${item.id === activeId ? " is-active" : ""}" data-id="${escapeHtml(item.id)}">
       <span class="japan-card-glow" aria-hidden="true"></span>
-      <span class="japan-card-flag">${escapeHtml(item.flag)}</span>
-      <h3>${escapeHtml(item.title)}${item.featured ? '<span class="series-pill">New</span>' : ""}</h3>
-      <p>${escapeHtml(item.desc)}</p>
-      <span class="japan-card-cta">Watch now →</span>
+      <div class="japan-card-visual" aria-hidden="true">
+        <img src="${escapeHtml(thumbUrl(item, "mq"))}" alt="" loading="lazy" decoding="async" />
+        <span class="japan-card-flag">${escapeHtml(item.flag)}</span>
+      </div>
+      <div class="japan-card-content">
+        <h3>${escapeHtml(item.title)}${item.featured ? '<span class="series-pill">New</span>' : ""}</h3>
+        <p>${escapeHtml(item.desc)}</p>
+        <span class="japan-card-cta">Watch now →</span>
+      </div>
     </button>`;
 }
 
@@ -441,7 +499,11 @@ document.getElementById("japan-shuffle")?.addEventListener("click", () => {
 
 document.querySelector("[data-featured-play]")?.addEventListener("click", () => {
   const featured = SERIES.find((s) => s.featured) || SERIES[0];
-  if (featured) playSeries(featured.id);
+  if (featured) playSeries(featured.id, { embed: true });
+});
+
+document.getElementById("poster-play")?.addEventListener("click", () => {
+  loadEmbed(activeId);
 });
 
 document.getElementById("series-search")?.addEventListener("input", renderExploreGrid);
@@ -453,7 +515,7 @@ document.getElementById("picker-search")?.addEventListener("input", (e) => {
 
 document.querySelector("[data-play-life]")?.addEventListener("click", () => {
   const life = SERIES.find((s) => s.region === "life");
-  if (life) playSeries(life.id);
+  if (life) playSeries(life.id, { embed: true });
 });
 
 /* Reveal */
@@ -582,6 +644,30 @@ function initScrollProgress() {
   );
 }
 
+function initThumbnails() {
+  // Hero spotlight: real Tromsø frame instead of the stock photo
+  const media = document.querySelector(".spotlight-media");
+  const featured = SERIES.find((s) => s.featured);
+  if (media && featured) {
+    media.style.background = `linear-gradient(135deg, rgba(12, 31, 54, 0.45), rgba(6, 93, 107, 0.35)), url("${thumbUrl(featured)}") center / cover no-repeat`;
+  }
+
+  // Life-abroad poster thumbnail
+  const lifeThumb = document.querySelector("[data-life-thumb]");
+  const life = SERIES.find((s) => s.region === "life");
+  if (lifeThumb && life) {
+    lifeThumb.src = thumbUrl(life);
+    lifeThumb.closest(".video-poster-wrap")?.classList.add("has-thumb");
+  }
+
+  // If a thumbnail fails to load, fall back to the gradient + flag poster
+  document.querySelectorAll(".poster-thumb").forEach((img) => {
+    img.addEventListener("error", () => {
+      img.closest(".video-poster-wrap")?.classList.remove("has-thumb");
+    });
+  });
+}
+
 function initSubscribeDock() {
   const dock = document.getElementById("subscribe-dock");
   const subSection = document.getElementById("subscribe");
@@ -619,9 +705,10 @@ initRegionBento();
 initSubscribe();
 initScrollProgress();
 initSubscribeDock();
+initThumbnails();
 initHeroRotator();
 initHeroParallax();
 initCountUp();
 initScrollNav();
 initTiltCards(document);
-playSeries(activeId, { scroll: false });
+playSeries(activeId, { scroll: false, silent: true });

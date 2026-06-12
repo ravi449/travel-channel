@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -311,16 +311,22 @@
                 <h3 id="series-title">Tromsø Series</h3>
                 <span class="series-region-badge" id="series-badge">Europe</span>
               </div>
-              <div class="video-wrap">
-                <iframe
-                  id="series-iframe"
-                  src="https://www.youtube.com/embed/videoseries?list=PL1fmFICKiHAG94wzaMXeWvc6r12skEfqo"
-                  title="Tromsø Series playlist"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                  loading="lazy"
-                ></iframe>
+              <div class="video-wrap video-poster-wrap" id="series-poster-wrap">
+                <div class="poster-bg" id="poster-bg" data-region="europe" aria-hidden="true"></div>
+                <img class="poster-thumb" id="poster-thumb" alt="" />
+                <div class="poster-shade" aria-hidden="true"></div>
+                <span class="poster-flag-blur" id="poster-flag-blur" aria-hidden="true">🇳🇴</span>
+                <div class="poster-body">
+                  <button type="button" class="poster-play-btn" id="poster-play">
+                    <span aria-hidden="true">▶</span>
+                    <span class="sr-only">Play this series here</span>
+                  </button>
+                  <p class="poster-series-name" id="poster-series-name">Tromsø Series</p>
+                  <p class="poster-note">Plays the full playlist right here</p>
+                  <a class="poster-yt-link" id="poster-yt-btn"
+                    href="https://www.youtube.com/playlist?list=PL1fmFICKiHAG94wzaMXeWvc6r12skEfqo"
+                    target="_blank" rel="noopener noreferrer">or open on YouTube →</a>
+                </div>
               </div>
               <div class="player-controls">
                 <button type="button" class="btn-player" id="player-prev" aria-label="Previous series">← Prev</button>
@@ -401,15 +407,22 @@
                 Play in viewer
               </button>
             </div>
-            <div class="video-wrap video-wrap-life">
-              <iframe
-                src="https://www.youtube.com/embed/videoseries?list=PL1fmFICKiHAFcUoaX6aHtNIBKEiIKNo2_"
-                title="Pregnancy in Germany playlist"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
+            <div class="video-wrap video-wrap-life video-poster-wrap">
+              <div class="poster-bg" data-region="life" aria-hidden="true"></div>
+              <img class="poster-thumb" data-life-thumb alt="" />
+              <div class="poster-shade" aria-hidden="true"></div>
+              <span class="poster-flag-blur" aria-hidden="true">🇩🇪</span>
+              <div class="poster-body">
+                <span class="poster-flag-main">🇩🇪</span>
+                <p class="poster-series-name">Pregnancy in Germany</p>
+                <a class="poster-yt-btn"
+                  href="https://www.youtube.com/playlist?list=PL1fmFICKiHAFcUoaX6aHtNIBKEiIKNo2_"
+                  target="_blank" rel="noopener noreferrer">
+                  <span class="poster-yt-icon" aria-hidden="true">▶</span>
+                  Watch on YouTube
+                </a>
+                <p class="poster-note">Opens full playlist in a new tab</p>
+              </div>
             </div>
           </div>
         </div>

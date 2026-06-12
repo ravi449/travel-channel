@@ -4,12 +4,15 @@ const YOUTUBE = {
   handle: "shravilifeinabroad",
 };
 
+// `thumb` is the video ID of each playlist's lead video — used to build
+// real YouTube thumbnail URLs for cards and the inline player poster.
 const SERIES = [
   {
     id: "PL1fmFICKiHAEihBf0hBbWnNh_jjapaY4n",
     title: "Portugal Series",
     region: "europe",
     flag: "🇵🇹",
+    thumb: "U9AVXL3ZSd8",
     desc: "Coastlines, cities, and culture across Portugal.",
   },
   {
@@ -17,6 +20,7 @@ const SERIES = [
     title: "Spain Series",
     region: "europe",
     flag: "🇪🇸",
+    thumb: "zRk-_lJ_YeQ",
     desc: "Spanish adventures, food, and unforgettable stops.",
   },
   {
@@ -24,6 +28,7 @@ const SERIES = [
     title: "India 2025",
     region: "asia",
     flag: "🇮🇳",
+    thumb: "I97ipOKgRRE",
     desc: "Family, festivals, and travel across India in 2025.",
   },
   {
@@ -31,6 +36,7 @@ const SERIES = [
     title: "Paris Series",
     region: "europe",
     flag: "🇫🇷",
+    thumb: "HSFwa4FLrKs",
     desc: "Streets, sights, and everyday magic in Paris.",
   },
   {
@@ -38,6 +44,7 @@ const SERIES = [
     title: "Switzerland Series",
     region: "europe",
     flag: "🇨🇭",
+    thumb: "1f7XliL1bu8",
     desc: "Alpine views, trains, and Swiss city escapes.",
   },
   {
@@ -45,6 +52,7 @@ const SERIES = [
     title: "Italy Series",
     region: "europe",
     flag: "🇮🇹",
+    thumb: "tFDF0Q9-zbM",
     desc: "Italian food, history, and scenic road-trip moments.",
   },
   {
@@ -52,6 +60,7 @@ const SERIES = [
     title: "Tromsø Series",
     region: "europe",
     flag: "🇳🇴",
+    thumb: "ioOFl9upwz8",
     desc: "Northern lights, Arctic views, and winter adventures in Tromsø.",
     featured: true,
   },
@@ -60,6 +69,7 @@ const SERIES = [
     title: "Kawaguchiko Series",
     region: "japan",
     flag: "🇯🇵",
+    thumb: "D7HwlxuoJ6c",
     desc: "Lake Kawaguchi, Mount Fuji views, and lakeside adventures.",
   },
   {
@@ -67,6 +77,7 @@ const SERIES = [
     title: "Hokkaido Series",
     region: "japan",
     flag: "🇯🇵",
+    thumb: "NN8KR5vazsc",
     desc: "Snow, seafood, and northern Japan road-trip vibes.",
   },
   {
@@ -74,6 +85,7 @@ const SERIES = [
     title: "Osaka–Nara Series",
     region: "japan",
     flag: "🇯🇵",
+    thumb: "ikdbTeFRpCg",
     desc: "Street food, temples, deer parks, and city hopping.",
   },
   {
@@ -81,6 +93,7 @@ const SERIES = [
     title: "Tokyo Disney Sea",
     region: "japan",
     flag: "🇯🇵",
+    thumb: "emmjOp0P84w",
     desc: "Theme park magic, rides, and a full day of Disney fun.",
   },
   {
@@ -88,6 +101,7 @@ const SERIES = [
     title: "Okinawa Series",
     region: "japan",
     flag: "🇯🇵",
+    thumb: "kRaGXIwqtJ4",
     desc: "Beaches, islands, and tropical Japan getaways.",
   },
   {
@@ -95,6 +109,7 @@ const SERIES = [
     title: "Pregnancy in Germany",
     region: "life",
     flag: "🇩🇪",
+    thumb: "ydBGEAzjXgQ",
     desc: "Healthcare, culture, and expat life while expecting in Germany.",
   },
 ];
@@ -112,4 +127,9 @@ function playlistUrl(id) {
 
 function embedUrl(id) {
   return `https://www.youtube.com/embed/videoseries?list=${id}`;
+}
+
+// size: "mq" = 320×180 (16:9, cards), "hq" = 480×360 (poster/spotlight)
+function thumbUrl(item, size = "hq") {
+  return `https://i.ytimg.com/vi/${item.thumb}/${size}default.jpg`;
 }
